@@ -21,11 +21,13 @@ export const InvoiceForm = ({ close }: IForm) => {
   const addInvoice = (invoice: Invoice) => {
     const invoicesData = getInvoices();
     // append new invoice to current data
-    const newData = [...invoicesData!.invoices, invoice];
+    const newData: Invoice[] = invoicesData
+      ? [...invoicesData!.invoices, invoice]
+      : [invoice];
     localStorage.setItem(
       'invoice',
       JSON.stringify({
-        invoices: invoicesData ? newData : invoice,
+        invoices: newData,
       })
     );
     // Reload to show new data. There're better ways to trigger component rerender but this is the easiest one concerning the time constraint
